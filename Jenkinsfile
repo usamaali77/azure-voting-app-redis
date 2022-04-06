@@ -38,8 +38,7 @@ pipeline {
       stage('Run Tests') {
          steps {
             sh(script: """
-               pip3 install pytest
-               pytest ./tests/test_sample.py
+               python3 -m pytest ./tests/test_sample.py
             """)
          }
       }
