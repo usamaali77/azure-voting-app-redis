@@ -23,8 +23,7 @@ pipeline {
          steps {
             sh(script: """
                docker-compose up -d
-               pwsh
-               ./scripts/test_container.ps1
+               ./scripts/test_container.sh
             """)
          }
          post {
