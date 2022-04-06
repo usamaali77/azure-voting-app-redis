@@ -62,5 +62,12 @@ pipeline {
             }
          }
       }
+      stage('Scan Container with Trivy'){
+         steps {
+            sh(script: """
+               trivy usama700/jenkins-course
+            """)
+         }
+      }
    }
 }
