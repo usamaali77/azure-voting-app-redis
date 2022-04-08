@@ -72,6 +72,8 @@ pipeline {
       stage('Run Anchore') {
          steps {
             anchore name: 'anchore_images'
+            bailOnFail: 'false'
+            bailOnPluginFail: 'false'
          }
       }
    }
