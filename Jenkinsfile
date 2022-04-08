@@ -62,18 +62,21 @@ pipeline {
             }
          }
       }
-      stage('Scan Container with Trivy'){
-         steps {
-            sh(script: """
-               trivy image usama700/jenkins-course
-            """)
-         }
-      }
-      stage('Run Anchore') {
-         steps {
-            anchore name: "anchore_images"
-            anchore bailOnFail: "false"
-            anchore bailOnPluginFail: "false"
+      stage ('Container Scanning') {
+         parallel {
+            stage('Scan Container with Trivy'){
+               steps {
+                  sh(script: """
+                     trivy image usama700/jenkins-course
+                  """)
+               }
+            }
+            stage('Run Anchore') {
+               steps {
+                  anchore name: "anchore_images", bailOnFail: false, bailOnPluginFail: false
+               }
+            }
+
          }
       }
    }
