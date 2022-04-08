@@ -80,11 +80,13 @@ pipeline {
          }
       }
       stage ('K8S Deploy') {
-         kubernetesDeploy(
-            configs: 'azure-vote-all-in-one-redis.yaml',
-            kubeconfigId: 'EKS Cluster Connection',
-            enableConfigSubstitution: true
-         )               
+         steps {
+            kubernetesDeploy(
+               configs: 'azure-vote-all-in-one-redis.yaml',
+               kubeconfigId: 'EKS Cluster Connection',
+               enableConfigSubstitution: true
+            )
+         }               
       }
    }
 }
