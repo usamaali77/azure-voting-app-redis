@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: azure-vote-back
@@ -7,16 +7,20 @@ spec:
   template:
     metadata:
       labels:
-        app: azure-vote-back
+        app: azure-vote
+        type: back-end
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: azure-vote-back
+      - name: azure-vote-backend
         image: redis
         ports:
         - containerPort: 6379
           name: redis
+  selector: 
+    matchLabels:
+      type: back-end
 ---
 apiVersion: v1
 kind: Service
@@ -28,7 +32,7 @@ spec:
   selector:
     app: azure-vote-back
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: azure-vote-front
@@ -42,13 +46,14 @@ spec:
   template:
     metadata:
       labels:
-        app: azure-vote-front
+        app: azure-vote
+        type: front-end
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: azure-vote-front
-        image: microsoft/azure-vote-front:v1
+      - name: azure-vote-frontend
+        image: usama700/jenkins-course
         ports:
         - containerPort: 80
         resources:
@@ -59,6 +64,10 @@ spec:
         env:
         - name: REDIS
           value: "azure-vote-back"
+  selector: 
+    matchLabels:
+      type: front-end
+  
 ---
 apiVersion: v1
 kind: Service
