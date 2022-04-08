@@ -69,5 +69,10 @@ pipeline {
             """)
          }
       }
+      stage('Run Anchore') {
+         steps {
+            anchore name: 'anchore_images'
+         }
+      }
    }
 }
